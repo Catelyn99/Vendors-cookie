@@ -3,7 +3,6 @@ body {
 }
 
 #app {
-    filter: blur(8px);
     width: 100%;
     height: 100%;
 }
