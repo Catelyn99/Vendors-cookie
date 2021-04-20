@@ -47,7 +47,7 @@ const createPopup = () => {
             expires = "; expires=" + date.toUTCString();
             document.cookie = `vendors=${vendorsId}${expires}; path=/`;
         }
-        let selectedVendorsId = [...document.querySelectorAll('.vendor-checkbox:checked')].map(element => element.name);
+        const selectedVendorsId = [...document.querySelectorAll('.vendor-checkbox:checked')].map(element => element.name);
         setCookie(selectedVendorsId);
     });
 
@@ -72,7 +72,7 @@ const createPopup = () => {
                 if (err !== null) {
                     alert('Something went wrong: ' + err);
                 } else {
-                    let vendorsHtml = Object.values(data.vendors).map(vendor =>
+                    const vendorsHtml = Object.values(data.vendors).map(vendor =>
                         `<div class='vendor-box'>
                            <input class='vendor-checkbox' type="checkbox" id="vendor-${vendor.id}" name="${vendor.id}"/>
                            <label for="vendor-${vendor.id}" class="vendor-name">${vendor.name}</label>
