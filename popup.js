@@ -40,18 +40,27 @@ const createPopup = () => {
         }
     });
 
-    document.querySelector('.accept-btn').addEventListener("click", () => {
-        function setCookie(vendorsId) {
-            let expires = "";
-            const date = new Date();
-            date.setTime(date.getTime() + (24 * 60 * 60 * 1000));
-            expires = "; expires=" + date.toUTCString();
-            document.cookie = `vendors=${vendorsId}${expires}; path=/`;
-        }
-        let selectedVendorsId = [...document.querySelectorAll('.vendor-checkbox:checked')].map(element => element.name);
-        setCookie(selectedVendorsId);
-    });
 
+    const createCookie = selector => {
+        document.querySelector(selector).addEventListener("click", () => {
+            function setCookie(vendorsId) {
+                let expires = "";
+                const date = new Date();
+                date.setTime(date.getTime() + (24 * 60 * 60 * 1000));
+                expires = "; expires=" + date.toUTCString();
+                if (vendorsId == 0) {
+                    document.cookie = `vendors= 0 ${expires}; path=/`;
+                } else {
+                    document.cookie = `vendors=${vendorsId}${expires}; path=/`;
+                }
+            }
+            let selectedVendorsId = [...document.querySelectorAll('.vendor-checkbox:checked')].map(element => element.name);
+            setCookie(selectedVendorsId);
+        });
+    };
+
+    createCookie('.accept-btn');
+    createCookie('.reject-btn');
     attachClosePopup('.accept-btn');
     attachClosePopup('.reject-btn');
 
