@@ -1,35 +1,34 @@
 const createPopup = () => {
-    let popup = document.createElement("div");
-    popup.id = "popup";
+    (() => {
+        let popup = document.createElement("div");
+        popup.id = "popup";
 
-    const popupContent = `
-    <header>
-        <h1>GDPR consent</h1>
-        <div class="select-all-btn">SELECT ALL</div>
-    </header>
-    <section id="popup-vendors">
-    </section>
-    <footer>
-        <button class="accept-btn">ACCEPT</button>
-        <button class="reject-btn">REJECT</button>
-    </footer>
-    `;
+        const popupContent = `
+          <header>
+            <h1>GDPR consent</h1>
+            <div class="select-all-btn">SELECT ALL</div>
+          </header>
+          <section id="popup-vendors"></section>
+          <footer>
+            <button class="accept-btn">ACCEPT</button>
+            <button class="reject-btn">REJECT</button>
+          </footer>`;
 
-    popup.insertAdjacentHTML('afterbegin', popupContent);
-    document.body.appendChild(popup);
-    document.querySelector('#app').style.filter = 'blur(8px)';
-
-    const closePopup = () => {
-        document.querySelector('#popup').style.display = 'none';
-        document.body.style.overflow = 'initial';
-        document.querySelector('#app').style.filter = 'none';
-    };
+        popup.insertAdjacentHTML('afterbegin', popupContent);
+        document.body.appendChild(popup);
+        document.querySelector('#app').style.filter = 'blur(8px)';
+    })();
 
     const attachClosePopup = (selector) => {
         document.querySelector(selector).addEventListener("click", () => {
-            closePopup();
+            document.querySelector('#popup').style.display = 'none';
+            document.body.style.overflow = 'initial';
+            document.querySelector('#app').style.filter = 'none';
         });
     };
+
+    attachClosePopup('.accept-btn');
+    attachClosePopup('.reject-btn');
 
     document.querySelector('.select-all-btn').addEventListener("click", () => {
         const checkboxes = [...document.querySelectorAll('.vendor-checkbox')];
@@ -39,7 +38,6 @@ const createPopup = () => {
             checkboxes.forEach(checkbox => checkbox.checked = true);
         }
     });
-
 
     const createCookie = selector => {
         document.querySelector(selector).addEventListener("click", () => {
@@ -61,9 +59,7 @@ const createPopup = () => {
 
     createCookie('.accept-btn');
     createCookie('.reject-btn');
-    attachClosePopup('.accept-btn');
-    attachClosePopup('.reject-btn');
-
+   
     (() => {
         const getJSON = (url, callback) => {
             const xhr = new XMLHttpRequest();
@@ -85,7 +81,7 @@ const createPopup = () => {
                 if (err !== null) {
                     alert('Something went wrong: ' + err);
                 } else {
-                    let vendorsHtml = Object.values(data.vendors).map(vendor =>
+                    const vendorsHtml = Object.values(data.vendors).map(vendor =>
                         `<div class='vendor-box'>
                            <input class='vendor-checkbox' type="checkbox" id="vendor-${vendor.id}" name="${vendor.id}"/>
                            <label for="vendor-${vendor.id}" class="vendor-name">${vendor.name}</label>
@@ -123,7 +119,7 @@ const showPopup = () => {
 
     if (!getCookie('vendors')) {
         createPopup();
-    };
+    }
 };
 
 showPopup();
