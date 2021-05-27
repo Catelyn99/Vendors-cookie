@@ -9,6 +9,8 @@ The application sends the selected vendors to cookie.
 The view is blurry while the app is displayed.
 Information appears every 24 hours after acceptance. 
 
+![Vendors cookie](vendors-cookie.jpg?raw=true "Vendors Cookie")
+
 ## Technology
 * HTML5
 * CSS3
